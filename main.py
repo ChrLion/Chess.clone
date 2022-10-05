@@ -23,6 +23,7 @@ done = False
 clock = pygame.time.Clock()
 
 # -------- Main Program Loop -----------
+print("test")
 while True:
     # --- Main event loop
     for event in pygame.event.get():
@@ -35,3 +36,4 @@ while True:
 
     # --- Limit to 60 frames per second
     clock.tick(30)
+  
