@@ -29,7 +29,7 @@ class WhitePawn(py.sprite.Sprite):
     def draw(self, pos):
         screen.blit(self.image, pos)
 
-    def move_pawn(self, new_pos):
+   # def move_pawn(self, new_pos):
 class BlackPawn(py.sprite.Sprite):
             def __init__(self):
                 self.image = py.image.load(r'sprites\pieces\Black Pawn.png')
