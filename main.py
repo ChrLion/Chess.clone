@@ -162,32 +162,31 @@ class BlackKing(py.sprite.Sprite):
 
 
 # Variables
-one = 40
-two = 120
-three = 200
-four = 280
-five = 360
-six = 440
-seven = 520
-eight = 600
-a = 600
-b = 520
-c = 440
-d = 360
-e = 280
-f = 200
-g = 120
-h = 40
+one = 600
+two = 520
+three = 440
+four = 360
+five = 280
+six = 200
+seven = 120
+eight = 40
+h = 600
+g = 520
+f = 440
+e = 360
+d = 280
+c = 200
+b = 120
+a = 40
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
 BROWN = (184, 140, 100)
 BEIGE = (255, 233, 197)
 
 py.init()
 Board = Board()
+WhitePawn_a2 = WhitePawn((a, two))
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
@@ -215,6 +214,7 @@ while True:
 
     screen.fill(WHITE)
     Board.draw_board()
+    WhitePawn_a2.draw()
 
     py.display.flip()
 
