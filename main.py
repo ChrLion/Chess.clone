@@ -23,7 +23,7 @@ class Board:
 
 class White_pawn(py.sprite.Sprite):
     def __init__(self):
-        self.image = py.image.load(r'C:\Users\chris\Documents\GitHub\Chess.clone\sprites\White Pawn.png')
+        self.image = py.image.load(r'sprites\pieces\White Pawn.png')
         self.rect = self.image.get_rect()
 
     def draw_white_pawn(self, pos):
