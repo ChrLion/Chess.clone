@@ -19,11 +19,26 @@ class Board:
                 py.draw.rect(screen, BEIGE, [self.size_x*2*i+3*self.position, self.size_y*u*2+3*self.position, self.size_x, self.size_y])
 
 
+class Pawn(py.sprite.Sprite):
+    def __init__(self):
+        self.sprite =
+
+#class Knight(py.sprite.Sprite):
+#
+#class Bishop(py.sprite.Sprite):
+#
+#class Rook(py.sprite.Sprite):
+#
+#class King(py.sprite.Sprite):
+#
+#class Queen(py.sprite.Sprite):
+
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-BROWN = (133, 94, 66)
+BROWN = (184, 140, 100)
 BEIGE = (255, 233, 197)
 
 py.init()
