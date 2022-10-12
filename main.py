@@ -34,10 +34,12 @@ class WhitePawn(py.sprite.Sprite):
         super().__init__()
         self.pos = pos
         self.image = py.image.load(r'sprites\pieces\White Pawn.png')
-        self.rect = self.image.get_rect()
+        self.rect = py.rect.Rect(pos[0], pos[1], 80, 80)
 
-    def draw(self, ):
+    def draw(self):
         screen.blit(self.image, self.pos)
+
+    #def move(self, pos):
 
 
 class BlackPawn(py.sprite.Sprite):
@@ -211,6 +213,16 @@ while True:
     for event in py.event.get():
         if event.type == py.QUIT:
             quit()
+        if event.type == py.MOUSEBUTTONDOWN:
+            clicked_at = py.mouse.get_pos()
+            print(clicked_at)
+            print(WhitePawn_a2.rect)
+            ph = WhitePawn_a2.rect.collidepoint(clicked_at)
+            if ph:
+                print("clicked")
+            #if py.rect.Rect.colliderect(WhitePawn_a2.rect, py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)):
+            #    print("clicked")
+
 
     screen.fill(WHITE)
     Board.draw_board()
