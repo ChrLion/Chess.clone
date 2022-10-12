@@ -1,4 +1,6 @@
 import pygame as py
+import random
+import sys
 
 
 class Board:
@@ -19,9 +21,16 @@ class Board:
                 py.draw.rect(screen, BEIGE, [self.size_x*2*i+3*self.position, self.size_y*u*2+3*self.position, self.size_x, self.size_y])
 
 
-class Pawn(py.sprite.Sprite):
+class White_pawn(py.sprite.Sprite):
     def __init__(self):
-        self.sprite =
+        self.image = py.image.load(r'C:\Users\chris\Documents\GitHub\Chess.clone\sprites\White Pawn.png')
+        self.rect = self.image.get_rect()
+
+    def draw_white_pawn(self, pos):
+        screen.blit(self.image, pos)
+
+    def move_pawn(self, new_pos):
+
 
 #class Knight(py.sprite.Sprite):
 #
@@ -43,6 +52,7 @@ BEIGE = (255, 233, 197)
 
 py.init()
 Board = Board()
+TestPawm = White_pawn()
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
@@ -64,6 +74,7 @@ while True:
 
     screen.fill(WHITE)
     Board.draw_board()
+    TestPawm.draw_white_pawn((40, 120))
 
     py.display.flip()
 
