@@ -65,6 +65,12 @@ done = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
 
+while True:
+    for event in py.event.get():
+        if event.type == py.QUIT:
+            quit()
+
+
 # -------- Main Program Loop -----------
 while True:
     # --- Main event loop
