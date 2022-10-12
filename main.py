@@ -22,91 +22,14 @@ class Board:
 
 
 class WhitePawn(py.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, pos):
+        super().__init__()
+        self.pos = pos
         self.image = py.image.load(r'sprites\pieces\White Pawn.png')
         self.rect = self.image.get_rect()
 
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-
-   # def move_pawn(self, new_pos):
-class BlackPawn(py.sprite.Sprite):
-            def __init__(self):
-                self.image = py.image.load(r'sprites\pieces\Black Pawn.png')
-                self.rect = self.image.get_rect()
-
-            def draw(self, pos):
-                screen.blit(self.image, pos)
-class WhiteKnight(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\White Knight.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class BlackKnight(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\Black Knight.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class WhiteBishop(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\White Bishop.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class BlackBishop(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\Black Bishop.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class WhiteRook(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\White Rook.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class BlackRook(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\Black Rook.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class WhiteKing(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\White King.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class BlackKing(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\Black King.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class WhiteQueen(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\White Queen.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
-class BlackQueen(py.sprite.Sprite):
-    def __init__(self):
-        self.image = py.image.load(r'sprites\pieces\Black Queen.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, pos):
-        screen.blit(self.image, pos)
+    def draw(self, ):
+        screen.blit(self.image, self.pos)
 
 
 BLACK = (0, 0, 0)
@@ -118,7 +41,6 @@ BEIGE = (255, 233, 197)
 
 py.init()
 Board = Board()
-TestPawm = White_pawn()
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
@@ -131,10 +53,10 @@ done = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
 
-while True:
-    for event in py.event.get():
-        if event.type == py.QUIT:
-            quit()
+#while True:
+#    for event in py.event.get():
+#        if event.type == py.QUIT:
+#            quit()
 
 
 # -------- Main Program Loop -----------
@@ -146,7 +68,6 @@ while True:
 
     screen.fill(WHITE)
     Board.draw_board()
-    TestPawm.draw_white_pawn((40, 120))
 
     py.display.flip()
 
