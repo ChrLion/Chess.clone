@@ -21,26 +21,92 @@ class Board:
                 py.draw.rect(screen, BEIGE, [self.size_x*2*i+3*self.position, self.size_y*u*2+3*self.position, self.size_x, self.size_y])
 
 
-class White_pawn(py.sprite.Sprite):
+class WhitePawn(py.sprite.Sprite):
     def __init__(self):
         self.image = py.image.load(r'sprites\pieces\White Pawn.png')
         self.rect = self.image.get_rect()
 
-    def draw_white_pawn(self, pos):
+    def draw(self, pos):
         screen.blit(self.image, pos)
 
     def move_pawn(self, new_pos):
+class BlackPawn(py.sprite.Sprite):
+            def __init__(self):
+                self.image = py.image.load(r'sprites\pieces\Black Pawn.png')
+                self.rect = self.image.get_rect()
 
+            def draw(self, pos):
+                screen.blit(self.image, pos)
+class WhiteKnight(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\White Knight.png')
+        self.rect = self.image.get_rect()
 
-#class Knight(py.sprite.Sprite):
-#
-#class Bishop(py.sprite.Sprite):
-#
-#class Rook(py.sprite.Sprite):
-#
-#class King(py.sprite.Sprite):
-#
-#class Queen(py.sprite.Sprite):
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class BlackKnight(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\Black Knight.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class WhiteBishop(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\White Bishop.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class BlackBishop(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\Black Bishop.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class WhiteRook(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\White Rook.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class BlackRook(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\Black Rook.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class WhiteKing(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\White King.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class BlackKing(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\Black King.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class WhiteQueen(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\White Queen.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
+class BlackQueen(py.sprite.Sprite):
+    def __init__(self):
+        self.image = py.image.load(r'sprites\pieces\Black Queen.png')
+        self.rect = self.image.get_rect()
+
+    def draw(self, pos):
+        screen.blit(self.image, pos)
 
 
 BLACK = (0, 0, 0)
