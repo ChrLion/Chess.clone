@@ -1,4 +1,5 @@
 #Yaman
+print("Test")
 import pygame as py
 
 import pygame
