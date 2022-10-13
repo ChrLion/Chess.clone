@@ -39,6 +39,7 @@ class Pawn(py.sprite.Sprite):
         self.pos = pos
         self.rect = self.image.get_rect()
         self.rect.topleft = self.pos
+        self.moved = False
 
     def draw(self):
         screen.blit(self.image, self.pos)
@@ -48,7 +49,9 @@ class Pawn(py.sprite.Sprite):
         self.rect.topleft = self.pos
         print(self.rect)
 
-    # def move(self, pos):
+    def move(self):
+        print("moved")
+        self.moved = True
 
 
 class Knight(py.sprite.Sprite):
@@ -112,7 +115,7 @@ class Queen(py.sprite.Sprite):
 
 
 class King(py.sprite.Sprite):
-    def __init__(self, pos,white):
+    def __init__(self, pos, white):
         super().__init__()
         if white:
             self.image = py.image.load(r'sprites\pieces\White King.png')
@@ -160,9 +163,15 @@ Board = Board()
 white_pawn_list = [Pawn((a_to_h[num], one_to_eight[1]), True) for num in range(8)]
 black_pawn_list = [Pawn((a_to_h[num], one_to_eight[6]), False) for num in range(8)]
 white_piece_list = [Knight((a_to_h[1], one_to_eight[0]), True), Knight((a_to_h[6], one_to_eight[0]), True), Rook((a_to_h[0], one_to_eight[0]), True), Rook((a_to_h[7], one_to_eight[0]), True), Bishop((a_to_h[2], one_to_eight[0]), True), Bishop((a_to_h[5], one_to_eight[0]), True), Queen((a_to_h[3], one_to_eight[0]), True), King((a_to_h[4], one_to_eight[0]), True)]
+white_piece_list += white_pawn_list
 black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[6], one_to_eight[7]), False), Rook((a_to_h[0], one_to_eight[7]), False), Rook((a_to_h[7], one_to_eight[7]), False), Bishop((a_to_h[2], one_to_eight[7]), False), Bishop((a_to_h[5], one_to_eight[7]), False), Queen((a_to_h[3], one_to_eight[7]), False), King((a_to_h[4], one_to_eight[7]), False)]
+black_piece_list += black_pawn_list
+white_rect_list = []
+for piece in white_piece_list:
+    white_rect_list.append(piece.rect)
+print(white_rect_list)
+piece_list = white_piece_list + black_piece_list
 
-piece_list = white_pawn_list + black_pawn_list + white_piece_list + black_piece_list
 print(white_pawn_list)
 
 # Set the width and height of the screen [width, height]
@@ -172,7 +181,8 @@ screen = py.display.set_mode(size)
 py.display.set_caption("Chess")
 
 # Loop until the user clicks the close button.
-done = False
+draw_highlight = False
+piece_clicked = -1
 
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
@@ -191,14 +201,20 @@ while True:
             quit()
         if event.type == py.MOUSEBUTTONDOWN:
             clicked_at = py.mouse.get_pos()
-            # py.rect.Rect.collidelist()
-            # if Pawn_a2.rect.collidepoint(clicked_at):
-            #     print("clicked")
-            #     Pawn_a2.update()
-#
+            piece_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), white_rect_list)
+            if piece_clicked != -1:
+                print("test")
+                if draw_highlight:
+                    draw_highlight = False
+                else:
+                    draw_highlight = True
+
     screen.fill(WHITE)
     Board.draw_board()
     draw_pieces(piece_list)
+    if draw_highlight:
+        py.draw.rect(screen, (255, 0, 0), white_rect_list[piece_clicked], 5, 1)
+
     py.display.flip()
 
     clock.tick(30)
