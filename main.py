@@ -29,138 +29,106 @@ class Board:
                               self.size_x, self.size_y])
 
 
-class WhitePawn(py.sprite.Sprite):
-    def __init__(self, pos):
+class Pawn(py.sprite.Sprite):
+    def __init__(self, pos, white):
         super().__init__()
+        if white:
+            self.image = py.image.load(r'sprites\pieces\White Pawn.png')
+        else:
+            self.image = py.image.load(r'sprites\pieces\Black Pawn.png')
         self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\White Pawn.png')
-        self.rect = py.rect.Rect(pos[0], pos[1], 80, 80)
+        self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
 
     def draw(self):
         screen.blit(self.image, self.pos)
 
-    #def move(self, pos):
-
-
-class BlackPawn(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\Black Pawn.png')
+    def update(self):
         self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
+        print(self.rect)
+
+    # def move(self, pos):
+
+
+class Knight(py.sprite.Sprite):
+    def __init__(self, pos, white):
+        super().__init__()
+        if white:
+            self.image = py.image.load(r'sprites\pieces\White Knight.png')
+        else:
+            self.image = py.image.load(r'sprites\pieces\Black Knight.png')
+        self.pos = pos
+        self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
 
     def draw(self, ):
         screen.blit(self.image, self.pos)
 
 
-class WhiteKnight(py.sprite.Sprite):
-    def __init__(self, pos):
+class Bishop(py.sprite.Sprite):
+    def __init__(self, pos, white):
         super().__init__()
+        if white:
+            self.image = py.image.load(r'sprites\pieces\White Bishop.png')
+        else:
+            self.image = py.image.load(r'sprites\pieces\Black Bishop.png')
         self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\White Knight.png')
         self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
 
     def draw(self, ):
         screen.blit(self.image, self.pos)
 
 
-class BlackKnight(py.sprite.Sprite):
-    def __init__(self, pos):
+class Rook(py.sprite.Sprite):
+    def __init__(self, pos, white):
         super().__init__()
+        if white:
+            self.image = py.image.load(r'sprites\pieces\White Rook.png')
+        else:
+            self.image = py.image.load(r'sprites\pieces\Black Rook.png')
         self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\Black Knight.png')
         self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
 
     def draw(self, ):
         screen.blit(self.image, self.pos)
 
 
-class WhiteBishop(py.sprite.Sprite):
-    def __init__(self, pos):
+class Queen(py.sprite.Sprite):
+    def __init__(self, pos, white):
         super().__init__()
+        if white:
+            self.image = py.image.load(r'sprites\pieces\White Queen.png')
+        else:
+            self.image = py.image.load(r'sprites\pieces\Black Queen.png')
         self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\White Bishop.png')
         self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
 
     def draw(self, ):
         screen.blit(self.image, self.pos)
 
 
-class BlackBishop(py.sprite.Sprite):
-    def __init__(self, pos):
+class King(py.sprite.Sprite):
+    def __init__(self, pos,white):
         super().__init__()
+        if white:
+            self.image = py.image.load(r'sprites\pieces\White King.png')
+        else:
+            self.image = py.image.load(r'sprites\pieces\Black King.png')
         self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\Black Bishop.png')
         self.rect = self.image.get_rect()
+        self.rect.topleft = self.pos
 
-    def draw(self, ):
+    def draw(self):
         screen.blit(self.image, self.pos)
 
 
-class WhiteRook(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\White Rook.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, ):
-        screen.blit(self.image, self.pos)
-
-
-class BlackRook(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\Black Rook.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, ):
-        screen.blit(self.image, self.pos)
-
-
-class WhiteQueen(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\White Queen.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, ):
-        screen.blit(self.image, self.pos)
-
-
-class BlackQueen(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\Black Queen.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, ):
-        screen.blit(self.image, self.pos)
-
-
-class WhiteKing(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\White King.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, ):
-        screen.blit(self.image, self.pos)
-
-
-class BlackKing(py.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.pos = pos
-        self.image = py.image.load(r'sprites\pieces\Black King.png')
-        self.rect = self.image.get_rect()
-
-    def draw(self, ):
-        screen.blit(self.image, self.pos)
+def draw_pieces(draw_list):
+    for piece in draw_list:
+        piece.draw()
 
 
 # Variables
@@ -180,7 +148,8 @@ d = 280
 c = 200
 b = 120
 a = 40
-
+a_to_h = [40, 120, 200, 280, 360, 440, 520, 600]
+one_to_eight = [600, 520, 440, 360, 280, 200, 120, 40]
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BROWN = (184, 140, 100)
@@ -188,7 +157,14 @@ BEIGE = (255, 233, 197)
 
 py.init()
 Board = Board()
-WhitePawn_a2 = WhitePawn((a, two))
+white_pawn_list = [Pawn((a_to_h[num], one_to_eight[1]), True) for num in range(8)]
+black_pawn_list = [Pawn((a_to_h[num], one_to_eight[6]), False) for num in range(8)]
+white_piece_list = [Knight((a_to_h[1], one_to_eight[0]), True), Knight((a_to_h[6], one_to_eight[0]), True), Rook((a_to_h[0], one_to_eight[0]), True), Rook((a_to_h[7], one_to_eight[0]), True), Bishop((a_to_h[2], one_to_eight[0]), True), Bishop((a_to_h[5], one_to_eight[0]), True), Queen((a_to_h[3], one_to_eight[0]), True), King((a_to_h[4], one_to_eight[0]), True)]
+black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[6], one_to_eight[7]), False), Rook((a_to_h[0], one_to_eight[7]), False), Rook((a_to_h[7], one_to_eight[7]), False), Bishop((a_to_h[2], one_to_eight[7]), False), Bishop((a_to_h[5], one_to_eight[7]), False), Queen((a_to_h[3], one_to_eight[7]), False), King((a_to_h[4], one_to_eight[7]), False)]
+
+piece_list = white_pawn_list + black_pawn_list + white_piece_list + black_piece_list
+print(white_pawn_list)
+
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
@@ -215,19 +191,14 @@ while True:
             quit()
         if event.type == py.MOUSEBUTTONDOWN:
             clicked_at = py.mouse.get_pos()
-            print(clicked_at)
-            print(WhitePawn_a2.rect)
-            ph = WhitePawn_a2.rect.collidepoint(clicked_at)
-            if ph:
-                print("clicked")
-            #if py.rect.Rect.colliderect(WhitePawn_a2.rect, py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)):
-            #    print("clicked")
-
-
+            # py.rect.Rect.collidelist()
+            # if Pawn_a2.rect.collidepoint(clicked_at):
+            #     print("clicked")
+            #     Pawn_a2.update()
+#
     screen.fill(WHITE)
     Board.draw_board()
-    WhitePawn_a2.draw()
-
+    draw_pieces(piece_list)
     py.display.flip()
 
     clock.tick(30)
