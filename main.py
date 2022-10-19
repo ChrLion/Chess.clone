@@ -9,6 +9,7 @@ class Board:
         self.size_y = 80
         self.position = 40
         self.mask = 1
+        self.board_list = []
 
     def draw_board(self):
         for u in range(4):
@@ -19,6 +20,13 @@ class Board:
                 py.draw.rect(screen, BROWN,
                              [self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + self.position, self.size_x,
                               self.size_y])
+                self.board_list.append(
+                    py.rect.Rect(self.size_x * 2 * i + self.position, self.size_y * u * 2 + self.position, self.size_x,
+                                 self.size_y))
+                self.board_list.append(
+                    py.rect.Rect(self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + self.position,
+                                 self.size_x,
+                                 self.size_y))
         for u in range(4):
             for i in range(4):
                 py.draw.rect(screen, BROWN,
@@ -27,6 +35,13 @@ class Board:
                 py.draw.rect(screen, BEIGE,
                              [self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + 3 * self.position,
                               self.size_x, self.size_y])
+                self.board_list.append(
+                    py.rect.Rect(self.size_x * 2 * i + self.position, self.size_y * u * 2 + 3 * self.position,
+                                 self.size_x,
+                                 self.size_y))
+                self.board_list.append(
+                    py.rect.Rect(self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + 3 * self.position,
+                                 self.size_x, self.size_y))
 
 
 class Pawn(py.sprite.Sprite):
@@ -153,8 +168,8 @@ class Button():
 
 
 def draw_pieces(draw_list):
-    for piece in draw_list:
-        piece.draw()
+    for piece_ in draw_list:
+        piece_.draw()
 
 
 # Variables
@@ -197,22 +212,23 @@ black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[
 black_piece_list += black_pawn_list
 white_rect_list = []
 for piece in white_piece_list:
-    white_rect_list.append(piece.rect)
+    white_rect_list.append(py.rect.Rect(piece.pos, (80, 80)))
 print(white_rect_list)
 piece_list = white_piece_list + black_piece_list
 
 print(white_pawn_list)
-
+move = False
 start_button = Button(320, 500, startimg, 0.5)
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
 
 py.display.set_caption("Chess")
+piece_clicked = -1
+prev_piece_clicked = -1
 
 # Loop until the user clicks the close button.
 done = False
-draw_highlight = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
 
@@ -229,21 +245,30 @@ while run:
     if action:
         run = False
 
+draw_highlight = False
 # -------- Main Program Loop -----------
 while True:
     # --- Main event loop
     for event in py.event.get():
         if event.type == py.QUIT:
             quit()
-        if event.type == py.MOUSEBUTTONDOWN:
+        elif event.type == py.MOUSEBUTTONDOWN:
             clicked_at = py.mouse.get_pos()
+            prev_piece_clicked = piece_clicked
             piece_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), white_rect_list)
-            if piece_clicked != -1:
+            board_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), Board.board_list)
+            print(piece_clicked)
+            if draw_highlight and not py.Rect.colliderect(white_rect_list[piece_clicked], py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)):
+                move = True
+
+            if piece_clicked == -1:
+                draw_highlight = False
+
+            elif py.Rect.colliderect(white_rect_list[piece_clicked], py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)) and draw_highlight:
+                draw_highlight = False
                 print("test")
-                if draw_highlight:
-                    draw_highlight = False
-                else:
-                    draw_highlight = True
+            else:
+                draw_highlight = True
 
     screen.fill(WHITE)
     Board.draw_board()
@@ -251,6 +276,9 @@ while True:
     if draw_highlight:
         py.draw.rect(screen, (255, 0, 0), white_rect_list[piece_clicked], 5, 1)
 
+    if move:
+        white_piece_list[prev_piece_clicked].pos = Board.board_list[board_clicked].topleft
+        move = False
+        white_rect_list[prev_piece_clicked].topleft = Board.board_list[board_clicked].topleft
     py.display.flip()
-
     clock.tick(30)
