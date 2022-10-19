@@ -216,5 +216,5 @@ while True:
         py.draw.rect(screen, (255, 0, 0), white_rect_list[piece_clicked], 5, 1)
 
     py.display.flip()
-
+    print("test")
     clock.tick(30)
