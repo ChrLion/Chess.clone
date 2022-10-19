@@ -127,29 +127,34 @@ class King(py.sprite.Sprite):
 
     def draw(self):
         screen.blit(self.image, self.pos)
+
+
 action = False
 startimg = py.image.load("sprites/Button/Start-Button-Vector-PNG.png")
 
+
 class Button():
-    def __init__(self,x,y,image,scale):
+    def __init__(self, x, y, image, scale):
         width = image.get_width()
         height = image.get_height()
         self.image = py.transform.scale(image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
+        self.rect.topleft = (x, y)
+
     def draw(self):
         pos = py.mouse.get_pos()
 
-
         if self.rect.collidepoint(pos):
             if event.type == py.MOUSEBUTTONDOWN and event.button == 1:
-
-             global action
-             action = True
-
-
+                global action
+                action = True
 
         screen.blit(self.image, (self.rect.x, self.rect.y))
+
+
+def draw_pieces(draw_list):
+    for piece in draw_list:
+        piece.draw()
 
 
 # Variables
@@ -180,9 +185,15 @@ py.init()
 Board = Board()
 white_pawn_list = [Pawn((a_to_h[num], one_to_eight[1]), True) for num in range(8)]
 black_pawn_list = [Pawn((a_to_h[num], one_to_eight[6]), False) for num in range(8)]
-white_piece_list = [Knight((a_to_h[1], one_to_eight[0]), True), Knight((a_to_h[6], one_to_eight[0]), True), Rook((a_to_h[0], one_to_eight[0]), True), Rook((a_to_h[7], one_to_eight[0]), True), Bishop((a_to_h[2], one_to_eight[0]), True), Bishop((a_to_h[5], one_to_eight[0]), True), Queen((a_to_h[3], one_to_eight[0]), True), King((a_to_h[4], one_to_eight[0]), True)]
+white_piece_list = [Knight((a_to_h[1], one_to_eight[0]), True), Knight((a_to_h[6], one_to_eight[0]), True),
+                    Rook((a_to_h[0], one_to_eight[0]), True), Rook((a_to_h[7], one_to_eight[0]), True),
+                    Bishop((a_to_h[2], one_to_eight[0]), True), Bishop((a_to_h[5], one_to_eight[0]), True),
+                    Queen((a_to_h[3], one_to_eight[0]), True), King((a_to_h[4], one_to_eight[0]), True)]
 white_piece_list += white_pawn_list
-black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[6], one_to_eight[7]), False), Rook((a_to_h[0], one_to_eight[7]), False), Rook((a_to_h[7], one_to_eight[7]), False), Bishop((a_to_h[2], one_to_eight[7]), False), Bishop((a_to_h[5], one_to_eight[7]), False), Queen((a_to_h[3], one_to_eight[7]), False), King((a_to_h[4], one_to_eight[7]), False)]
+black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[6], one_to_eight[7]), False),
+                    Rook((a_to_h[0], one_to_eight[7]), False), Rook((a_to_h[7], one_to_eight[7]), False),
+                    Bishop((a_to_h[2], one_to_eight[7]), False), Bishop((a_to_h[5], one_to_eight[7]), False),
+                    Queen((a_to_h[3], one_to_eight[7]), False), King((a_to_h[4], one_to_eight[7]), False)]
 black_piece_list += black_pawn_list
 white_rect_list = []
 for piece in white_piece_list:
@@ -200,26 +211,23 @@ screen = py.display.set_mode(size)
 py.display.set_caption("Chess")
 
 # Loop until the user clicks the close button.
-done=False
-
+done = False
+draw_highlight = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
 
 run = True
-while run == True:
-
-
+while run:
 
     for event in py.event.get():
-       if event.type == py.QUIT:
+        if event.type == py.QUIT:
             quit()
     screen.fill(BROWN)
     start_button.draw()
     py.display.flip()
 
-    if action == True:
+    if action:
         run = False
-
 
 # -------- Main Program Loop -----------
 while True:
