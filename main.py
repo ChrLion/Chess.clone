@@ -127,11 +127,29 @@ class King(py.sprite.Sprite):
 
     def draw(self):
         screen.blit(self.image, self.pos)
+action = False
+startimg = py.image.load("sprites/Button/Start-Button-Vector-PNG.png")
+
+class Button():
+    def __init__(self,x,y,image,scale):
+        width = image.get_width()
+        height = image.get_height()
+        self.image = py.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x,y)
+    def draw(self):
+        pos = py.mouse.get_pos()
 
 
-def draw_pieces(draw_list):
-    for piece in draw_list:
-        piece.draw()
+        if self.rect.collidepoint(pos):
+            if event.type == py.MOUSEBUTTONDOWN and event.button == 1:
+
+             global action
+             action = True
+
+
+
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 
 
 # Variables
@@ -174,6 +192,7 @@ piece_list = white_piece_list + black_piece_list
 
 print(white_pawn_list)
 
+start_button = Button(320, 500, startimg, 0.5)
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
@@ -181,16 +200,25 @@ screen = py.display.set_mode(size)
 py.display.set_caption("Chess")
 
 # Loop until the user clicks the close button.
-draw_highlight = False
-piece_clicked = -1
+done=False
 
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
 
-# while True:
-#    for event in py.event.get():
-#        if event.type == py.QUIT:
-#            quit()
+run = True
+while run == True:
+
+
+
+    for event in py.event.get():
+       if event.type == py.QUIT:
+            quit()
+    screen.fill(BROWN)
+    start_button.draw()
+    py.display.flip()
+
+    if action == True:
+        run = False
 
 
 # -------- Main Program Loop -----------
@@ -216,5 +244,5 @@ while True:
         py.draw.rect(screen, (255, 0, 0), white_rect_list[piece_clicked], 5, 1)
 
     py.display.flip()
-    print("test")
+
     clock.tick(30)
