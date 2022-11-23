@@ -63,7 +63,7 @@ class Pawn(py.sprite.Sprite):
     def draw(self):
         screen.blit(self.image, self.pos)
 
-    def make_queen(self):
+    def promotion(self):
         print("queen")
 
     def show_available_moves(self):
@@ -71,6 +71,9 @@ class Pawn(py.sprite.Sprite):
             self.move_list = [(self.pos[0], self.pos[1] - 80)]
         else:
             self.move_list = [(self.pos[0], self.pos[1] - 160), (self.pos[0], self.pos[1] - 80)]
+        if self.pos[1] == 40:
+            self.move_list = []
+            self.promotion()
         print(self.move_list)
         for x in self.move_list:
             py.draw.rect(screen, GREEN, py.rect.Rect(x[0], x[1], 80, 80), 5)
@@ -182,7 +185,9 @@ def draw_pieces(draw_list):
         piece.draw()
 
 
-# Variables
+py.init()
+
+# basic Variables
 one = 600
 two = 520
 three = 440
@@ -207,9 +212,13 @@ BROWN = (184, 140, 100)
 BEIGE = (255, 233, 197)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
+done = False
+draw_highlight = False
+piece_clicked = -1
+prev_piece_clicked = -1
+move = False
 
-py.init()
-
+# board variables
 Board = Board()
 white_pawn_list = [Pawn((a_to_h[num], one_to_eight[1]), True) for num in range(8)]
 black_pawn_list = [Pawn((a_to_h[num], one_to_eight[6]), False) for num in range(8)]
@@ -222,34 +231,26 @@ black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[
                     Rook((a_to_h[0], one_to_eight[7]), False), Rook((a_to_h[7], one_to_eight[7]), False),
                     Bishop((a_to_h[2], one_to_eight[7]), False), Bishop((a_to_h[5], one_to_eight[7]), False),
                     Queen((a_to_h[3], one_to_eight[7]), False), King((a_to_h[4], one_to_eight[7]), False)]
+
 black_piece_list += black_pawn_list
 white_rect_list = []
 board_clicked = 0
 for piece in white_piece_list:
     white_rect_list.append(py.rect.Rect(piece.pos, (80, 80)))
-print(white_rect_list)
 piece_list = white_piece_list + black_piece_list
 
-print(white_pawn_list)
-move = False
+# sys variables
+size = (1080, 720)
+screen = py.display.set_mode(size)
+clock = py.time.Clock()
+py.display.set_caption("Chess")
+
+# menu Variables
 start_button = Button(320, 500, startimg, 0.5)
 Multibutton = Button(60, 440, multiim, 2)
 solobutton = Button(560, 440, soloim, 2)
 backbut = Button(10, 10, backimg, 1)
 
-# Set the width and height of the screen [width, height]
-size = (1080, 720)
-screen = py.display.set_mode(size)
-
-py.display.set_caption("Chess")
-piece_clicked = -1
-prev_piece_clicked = -1
-
-# Loop until the user clicks the close button.
-done = False
-draw_highlight = False
-# Used to manage how fast the screen updates
-clock = py.time.Clock()
 input_rect = pygame.Rect(200, 300, 140, 75)
 base_font = py.font.Font(None, 80)
 user_Name = ""
