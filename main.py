@@ -257,7 +257,9 @@ while True:
             prev_piece_clicked = piece_clicked
             piece_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), white_rect_list)
             board_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), Board.board_list)
-            print(piece_clicked)
+            print(board_clicked)
+            if draw_highlight and board_clicked == -1:
+                draw_highlight = False
             if draw_highlight and not py.Rect.colliderect(white_rect_list[piece_clicked], py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)):
                 move = True
 
