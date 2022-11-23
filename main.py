@@ -70,7 +70,7 @@ class Pawn(py.sprite.Sprite):
         if self.pos[1] != 520:
             self.move_list = [(self.pos[0], self.pos[1] - 80)]
         else:
-            self.move_list = [(self.pos[0], self.pos[1]-160), (self.pos[0], self.pos[1] - 80)]
+            self.move_list = [(self.pos[0], self.pos[1] - 160), (self.pos[0], self.pos[1] - 80)]
         print(self.move_list)
         for x in self.move_list:
             py.draw.rect(screen, GREEN, py.rect.Rect(x[0], x[1], 80, 80), 5)
@@ -157,8 +157,9 @@ multiim = py.image.load("sprites/Button/button (1).png")
 soloim = py.image.load("sprites/Button/button.png")
 backimg = py.image.load("sprites/Button/button (2).png")
 
+
 class Button():
-    def __init__(self, x, y, image, scale,text=''):
+    def __init__(self, x, y, image, scale, text=''):
         width = image.get_width()
         height = image.get_height()
         self.image = py.transform.scale(image, (int(width * scale), int(height * scale)))
@@ -176,14 +177,9 @@ class Button():
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
 
-
-
-
 def draw_pieces(draw_list):
     for piece in draw_list:
         piece.draw()
-
-
 
 
 # Variables
@@ -214,9 +210,6 @@ GREEN = (0, 255, 0)
 
 py.init()
 
-
-
-
 Board = Board()
 white_pawn_list = [Pawn((a_to_h[num], one_to_eight[1]), True) for num in range(8)]
 black_pawn_list = [Pawn((a_to_h[num], one_to_eight[6]), False) for num in range(8)]
@@ -240,10 +233,9 @@ piece_list = white_piece_list + black_piece_list
 print(white_pawn_list)
 move = False
 start_button = Button(320, 500, startimg, 0.5)
-Multibutton = Button(60,440, multiim ,2)
-solobutton = Button(560,440, soloim,2)
-backbut = Button(10,10,backimg,1)
-
+Multibutton = Button(60, 440, multiim, 2)
+solobutton = Button(560, 440, soloim, 2)
+backbut = Button(10, 10, backimg, 1)
 
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
@@ -258,16 +250,15 @@ done = False
 draw_highlight = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
-input_rect = pygame.Rect(200,300,140,75)
-base_font = py.font.Font(None,80)
-user_Name =""
-textfont = pygame.font.SysFont("monospace",80)
+input_rect = pygame.Rect(200, 300, 140, 75)
+base_font = py.font.Font(None, 80)
+user_Name = ""
+textfont = pygame.font.SysFont("monospace", 80)
 menu = True
 
-#_______________menu___________
+# _______________menu___________
 run = True
 while run:
-
 
     for event in py.event.get():
         if event.type == py.QUIT:
@@ -279,16 +270,14 @@ while run:
                 user_Name += event.unicode
     screen.fill(BROWN)
 
-
-    Name = textfont.render("Name",1,(BLACK))
-    screen.blit(Name,(0,300))
-
+    Name = textfont.render("Name", 1, BLACK)
+    screen.blit(Name, (0, 300))
 
     start_button.draw()
 
-    pygame.draw.rect(screen,WHITE,input_rect,2)
+    pygame.draw.rect(screen, WHITE, input_rect, 2)
 
-    text_surface = base_font.render(user_Name, True,BLACK )
+    text_surface = base_font.render(user_Name, True, BLACK)
     input_rect.w = text_surface.get_width() + 10
     screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
 
@@ -299,33 +288,25 @@ while run:
             action = False
             time.sleep(0.2)
 
-
 # ______________Game mode selction___________
 run = True
-while run == True:
+while run:
     for event in py.event.get():
         if event.type == py.QUIT:
             quit()
     screen.fill(BROWN)
 
-
-
     Multibutton.draw()
-    if action == True:
+    if action:
         run = False
 
     solobutton.draw()
-    if action == True:
+    if action:
         run = False
-
-
 
     action = False
 
-
     py.display.flip()
-
-
 
 # -------- Main Program Loop -----------
 while True:
