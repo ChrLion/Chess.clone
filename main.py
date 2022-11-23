@@ -1,6 +1,10 @@
+import time
+
 import pygame as py
 import random
 import sys
+
+import pygame.font
 
 
 class Board:
@@ -9,7 +13,6 @@ class Board:
         self.size_y = 80
         self.position = 40
         self.mask = 1
-        self.board_list = []
 
     def draw_board(self):
         for u in range(4):
@@ -20,13 +23,6 @@ class Board:
                 py.draw.rect(screen, BROWN,
                              [self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + self.position, self.size_x,
                               self.size_y])
-                self.board_list.append(
-                    py.rect.Rect(self.size_x * 2 * i + self.position, self.size_y * u * 2 + self.position, self.size_x,
-                                 self.size_y))
-                self.board_list.append(
-                    py.rect.Rect(self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + self.position,
-                                 self.size_x,
-                                 self.size_y))
         for u in range(4):
             for i in range(4):
                 py.draw.rect(screen, BROWN,
@@ -35,13 +31,6 @@ class Board:
                 py.draw.rect(screen, BEIGE,
                              [self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + 3 * self.position,
                               self.size_x, self.size_y])
-                self.board_list.append(
-                    py.rect.Rect(self.size_x * 2 * i + self.position, self.size_y * u * 2 + 3 * self.position,
-                                 self.size_x,
-                                 self.size_y))
-                self.board_list.append(
-                    py.rect.Rect(self.size_x * 2 * i + 3 * self.position, self.size_y * u * 2 + 3 * self.position,
-                                 self.size_x, self.size_y))
 
 
 class Pawn(py.sprite.Sprite):
@@ -146,10 +135,12 @@ class King(py.sprite.Sprite):
 
 action = False
 startimg = py.image.load("sprites/Button/Start-Button-Vector-PNG.png")
-
+multiim = py.image.load("sprites/Button/button (1).png")
+soloim = py.image.load("sprites/Button/button.png")
+backimg = py.image.load("sprites/Button/button (2).png")
 
 class Button():
-    def __init__(self, x, y, image, scale):
+    def __init__(self, x, y, image, scale,text=''):
         width = image.get_width()
         height = image.get_height()
         self.image = py.transform.scale(image, (int(width * scale), int(height * scale)))
@@ -167,9 +158,14 @@ class Button():
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
 
+
+
+
 def draw_pieces(draw_list):
-    for piece_ in draw_list:
-        piece_.draw()
+    for piece in draw_list:
+        piece.draw()
+
+
 
 
 # Variables
@@ -197,6 +193,10 @@ BROWN = (184, 140, 100)
 BEIGE = (255, 233, 197)
 
 py.init()
+
+
+
+
 Board = Board()
 white_pawn_list = [Pawn((a_to_h[num], one_to_eight[1]), True) for num in range(8)]
 black_pawn_list = [Pawn((a_to_h[num], one_to_eight[6]), False) for num in range(8)]
@@ -212,65 +212,113 @@ black_piece_list = [Knight((a_to_h[1], one_to_eight[7]), False), Knight((a_to_h[
 black_piece_list += black_pawn_list
 white_rect_list = []
 for piece in white_piece_list:
-    white_rect_list.append(py.rect.Rect(piece.pos, (80, 80)))
+    white_rect_list.append(piece.rect)
 print(white_rect_list)
 piece_list = white_piece_list + black_piece_list
 
 print(white_pawn_list)
-move = False
+
 start_button = Button(320, 500, startimg, 0.5)
+Multibutton = Button(60,440, multiim ,2)
+solobutton = Button(560,440, soloim,2)
+backbut = Button(10,10,backimg,1)
+
+
 # Set the width and height of the screen [width, height]
 size = (1080, 720)
 screen = py.display.set_mode(size)
 
 py.display.set_caption("Chess")
-piece_clicked = -1
-prev_piece_clicked = -1
 
 # Loop until the user clicks the close button.
 done = False
+draw_highlight = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
+input_rect = pygame.Rect(200,300,140,75)
+base_font = py.font.Font(None,80)
+user_Name =""
+textfont = pygame.font.SysFont("monospace",80)
+menu = True
 
+#_______________menu___________
 run = True
 while run:
+
 
     for event in py.event.get():
         if event.type == py.QUIT:
             quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                user_Name = user_Name[:-1]
+            elif len(user_Name) < 18:
+                user_Name += event.unicode
     screen.fill(BROWN)
-    start_button.draw()
-    py.display.flip()
 
-    if action:
+
+    Name = textfont.render("Name",1,(BLACK))
+    screen.blit(Name,(0,300))
+
+
+    start_button.draw()
+
+    pygame.draw.rect(screen,WHITE,input_rect,2)
+
+    text_surface = base_font.render(user_Name, True,BLACK )
+    input_rect.w = text_surface.get_width() + 10
+    screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+    py.display.flip()
+    if len(user_Name) > 0:
+        if action == True:
+            run = False
+            action = False
+            time.sleep(0.2)
+
+
+# ______________Game mode selction___________
+run = True
+while run == True:
+    for event in py.event.get():
+        if event.type == py.QUIT:
+            quit()
+    screen.fill(BROWN)
+
+
+
+    Multibutton.draw()
+    if action == True:
         run = False
 
-draw_highlight = False
+    solobutton.draw()
+    if action == True:
+        run = False
+
+
+
+    action = False
+
+
+    py.display.flip()
+
+
+
 # -------- Main Program Loop -----------
 while True:
     # --- Main event loop
     for event in py.event.get():
         if event.type == py.QUIT:
             quit()
-        elif event.type == py.MOUSEBUTTONDOWN:
+        if event.type == py.MOUSEBUTTONDOWN:
             clicked_at = py.mouse.get_pos()
-            prev_piece_clicked = piece_clicked
             piece_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), white_rect_list)
-            board_clicked = py.rect.Rect.collidelist(py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1), Board.board_list)
-            print(board_clicked)
-            if draw_highlight and board_clicked == -1:
-                draw_highlight = False
-            if draw_highlight and not py.Rect.colliderect(white_rect_list[piece_clicked], py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)):
-                move = True
-
-            if piece_clicked == -1:
-                draw_highlight = False
-
-            elif py.Rect.colliderect(white_rect_list[piece_clicked], py.rect.Rect(clicked_at[0], clicked_at[1], 1, 1)) and draw_highlight:
-                draw_highlight = False
+            if piece_clicked != -1:
                 print("test")
-            else:
-                draw_highlight = True
+                if draw_highlight:
+                    draw_highlight = False
+                else:
+                    draw_highlight = True
 
     screen.fill(WHITE)
     Board.draw_board()
@@ -278,9 +326,6 @@ while True:
     if draw_highlight:
         py.draw.rect(screen, (255, 0, 0), white_rect_list[piece_clicked], 5, 1)
 
-    if move:
-        white_piece_list[prev_piece_clicked].pos = Board.board_list[board_clicked].topleft
-        move = False
-        white_rect_list[prev_piece_clicked].topleft = Board.board_list[board_clicked].topleft
     py.display.flip()
+
     clock.tick(30)
