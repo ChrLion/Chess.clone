@@ -157,17 +157,15 @@ class King(py.sprite.Sprite):
         screen.blit(self.image, self.pos)
 
     def show_available_moves(self):
-        for x in self.move_list:
-            py.draw.rect(screen, GREEN, py.rect.Rect(x[0], x[1], 80, 80), 5)
         self.move_list = [(self.pos[0] + 80, self.pos[1]), (self.pos[0] - 80, self.pos[1]),
                           (self.pos[0] + 80, self.pos[1] + 80), (self.pos[0] - 80, self.pos[1] + 80),
                           (self.pos[0] + 80, self.pos[1] - 80), (self.pos[0] - 80, self.pos[1] - 80),
                           (self.pos[0], self.pos[1] + 80), (self.pos[0], self.pos[1] - 80)]
-        for x in self.move_list:
-            if x[1] > 600:
-                self.move_list.remove(x)
-                print(x)
 
+        for x in self.move_list:
+            if not x[1] > 600 and not x[1] < 40 and not x[0] > 600 and not x[0] < 40:
+                py.draw.rect(screen, GREEN, py.rect.Rect(x[0], x[1], 80, 80), 5)
+                print(x)
 
 
 action = False
