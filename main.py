@@ -1,4 +1,6 @@
 import pygame as py
+import random
+import sys
 
 
 class Board:
@@ -19,19 +21,15 @@ class Board:
                 py.draw.rect(screen, BEIGE, [self.size_x*2*i+3*self.position, self.size_y*u*2+3*self.position, self.size_x, self.size_y])
 
 
-class Pawn(py.sprite.Sprite):
-    def __init__(self):
-        self.sprite =
+class WhitePawn(py.sprite.Sprite):
+    def __init__(self, pos):
+        super().__init__()
+        self.pos = pos
+        self.image = py.image.load(r'sprites\pieces\White Pawn.png')
+        self.rect = self.image.get_rect()
 
-#class Knight(py.sprite.Sprite):
-#
-#class Bishop(py.sprite.Sprite):
-#
-#class Rook(py.sprite.Sprite):
-#
-#class King(py.sprite.Sprite):
-#
-#class Queen(py.sprite.Sprite):
+    def draw(self, ):
+        screen.blit(self.image, self.pos)
 
 
 BLACK = (0, 0, 0)
@@ -55,10 +53,10 @@ done = False
 # Used to manage how fast the screen updates
 clock = py.time.Clock()
 
-while True:
-    for event in py.event.get():
-        if event.type == py.QUIT:
-            quit()
+#while True:
+#    for event in py.event.get():
+#        if event.type == py.QUIT:
+#            quit()
 
 
 # -------- Main Program Loop -----------
